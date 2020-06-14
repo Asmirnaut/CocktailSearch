@@ -1,39 +1,68 @@
 import Head from 'next/head';
-import * as firebase from 'firebase';
 import { FirebaseWrapper } from '../lib/db/firebase';
-import axios from 'axios';
 import { config } from '../lib/db/index';
-import { getIngredients } from '../lib/db/drinkDb';
+import Button from '@material-ui/core/Button';
 
 export default class Index extends React.Component {
-  static async getInitialProps() {
-    FirebaseWrapper.GetInstance().Initialize(config);
-    try {
-      const drinksId = await FirebaseWrapper.GetInstance().GetDrinkId();
-      let IngPromise = drinksId.map((id) => {
-        setTimeout(async () => {
-          await getIngredients(id);
-        }, 4000);
-      });
+  constructor() {
+    super();
+    this.state = {
+      drinks: [],
+      ingredients: [],
+      mainIngredients: [],
+    };
+    this.populateMains = this.populateMains.bind(this);
+  }
 
-      await Promise.all(IngPromise);
+  async componentDidMount() {
+    try {
+      FirebaseWrapper.GetInstance().Initialize(config);
+      const allDrinks = await FirebaseWrapper.GetInstance().GetAllDrinks();
+      const allIngredients = await FirebaseWrapper.GetInstance().GetAllIngredients();
+
+      if (allDrinks && allIngredients) {
+        this.setState({ drinks: allDrinks, ingredients: allIngredients });
+      }
+      this.populateMains();
     } catch (error) {
       console.log(error);
     }
   }
 
-  render() {
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  populateMains() {
+    let mains = new Set();
+    this.state.ingredients &&
+      this.state.ingredients.forEach((ingredient) => {
+        const name = ingredient.ing1.name;
+        if (!mains.has(name)) {
+          mains.add(name);
+        }
+      });
+    this.setState({
+      ...this.state,
+      mainIngredients: [...mains],
+    });
+  }
 
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-      </main>
-    </div>;
+  render() {
+    console.log('state', this.state.mainIngredients);
+    return (
+      <div className="container">
+        <Head>
+          <title>CocktailSearch</title>
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="stylesheet" href="/styles.css" />
+        </Head>
+
+        <main>
+          <Button variant="contained" color="primary">
+            Click Me
+          </Button>
+          <h1 className="title">
+            Welcome to <a href="https://nextjs.org">Next.js!</a>
+          </h1>
+        </main>
+      </div>
+    );
   }
 }
