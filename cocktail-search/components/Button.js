@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:hover, &$focusVisible': {
       zIndex: 1,
+      color: '#1847c7',
       '& $imageBackdrop': {
         opacity: 0.15,
       },
@@ -111,9 +112,8 @@ export default function ButtonBases(props) {
               variant="subtitle1"
               color="inherit"
               className={classes.imageTitle}
-              id="textshadow"
             >
-              {props.name}
+              <p id="textshadow">{props.name}</p>
               <span className={classes.imageMarked} />
             </Typography>
           </span>

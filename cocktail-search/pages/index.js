@@ -1,16 +1,8 @@
-import Head from 'next/head';
 import { FirebaseWrapper } from '../lib/db/firebase';
 import { config } from '../lib/db/index';
-import Button from '@material-ui/core/Button';
 import ButtonBases from '../components/Button';
-
-const image = [
-  {
-    url: '../public/neon-cocktail-image-1.jpeg',
-    title: 'Drink',
-    width: '30%',
-  },
-];
+import Layout from '../components/Layout';
+import DrinkCard from '../components/DrinkCard';
 
 export default class Index extends React.Component {
   constructor() {
@@ -20,6 +12,7 @@ export default class Index extends React.Component {
       mainIngredients: [],
     };
     this.populateMains = this.populateMains.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
@@ -35,6 +28,7 @@ export default class Index extends React.Component {
       console.log(error);
     }
   }
+  handleClick(ing) {}
 
   populateMains() {
     let mains = new Set();
@@ -54,22 +48,23 @@ export default class Index extends React.Component {
   render() {
     const { mainIngredients, ingredients } = this.state;
     return (
-      <div className="container">
-        <Head>
-          <title>CocktailSearch</title>
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="stylesheet" href="/styles.css" />
-        </Head>
-
-        <main>
+      <Layout>
+        <main className="main">
           <div id="buttonGrid">
             {mainIngredients &&
               mainIngredients.map((ing) => {
-                return <ButtonBases name={ing} key={ing} id="grid" />;
+                return (
+                  <ButtonBases
+                    name={ing}
+                    key={ing}
+                    id="grid"
+                    onClick={() => this.handleClick(ing)}
+                  />
+                );
               })}
           </div>
         </main>
-      </div>
+      </Layout>
     );
   }
 }
