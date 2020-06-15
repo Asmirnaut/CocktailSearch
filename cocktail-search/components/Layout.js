@@ -16,7 +16,7 @@ const Layout = (props) => {
       </Head>
 
       <Header />
-      <NavBar className="NavBar" />
+      <NavBar className="NavBar" setDrinks={props.setDrinks} />
       <div className="Content">{props.children}</div>
     </div>
   );

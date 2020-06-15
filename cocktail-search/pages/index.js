@@ -3,78 +3,73 @@ import { config } from '../lib/db/index';
 import ButtonBases from '../components/Button';
 import Layout from '../components/Layout';
 import DrinkCard from '../components/DrinkCard';
+import { useState, useEffect } from 'react';
+import Drinks from '../pages/drinks';
 
-export default class Index extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      ingredients: [],
-      mainIngredients: [],
-      singleIngredient: '',
-      drinks: [],
-    };
-    this.populateMains = this.populateMains.bind(this);
-  }
+export default function Index() {
+  const [drinks, setDrinks] = useState([]);
+  const [main, setMain] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
-  async componentDidMount() {
+  useEffect(() => {
+    makeCall();
+  }, []);
+
+  useEffect(() => {
+    populateMains();
+  }, [ingredients]);
+
+  const makeCall = async () => {
     try {
       FirebaseWrapper.GetInstance().Initialize(config);
       const allIngredients = await FirebaseWrapper.GetInstance().GetAllIngredients();
-
       if (allIngredients) {
-        this.setState({ ...this.state, ingredients: allIngredients });
+        setIngredients(allIngredients);
       }
-      this.populateMains();
+      // populateMains();
     } catch (error) {
       console.log(error);
     }
-  }
-  // handleClick = async (e, ingredient) => {
-  //   e.preventDefault();
-  //   const drinks = await FirebaseWrapper.GetInstance().DrinksByIngredients(
-  //     ingredient
-  //   );
-  //   this.setState = {
-  //     ...this.state,
-  //     singleIngredient: ingredient,
-  //     drinks,
-  //   };
-  // };
+  };
+  // MOVE THIS HANDLECLICK TO THE BUTTON COMPONENT AND CALL IT THERE
 
-  populateMains() {
+  const populateMains = () => {
     let mains = new Set();
-    this.state.ingredients &&
-      this.state.ingredients.forEach((ingredient) => {
+    ingredients &&
+      ingredients.forEach((ingredient) => {
         const name = ingredient.ing1.name;
         if (!mains.has(name)) {
           mains.add(name);
         }
       });
-    this.setState({
-      ...this.state,
-      mainIngredients: [...mains],
-    });
-  }
+    setMain([...mains]);
+  };
 
-  render() {
-    const {
-      mainIngredients,
-      ingredients,
-      drinks,
-      singleIngredient,
-    } = this.state;
-
-    return (
-      <Layout>
-        <main className="main">
-          <div id="buttonGrid">
-            {mainIngredients &&
-              mainIngredients.map((ing) => {
-                return <ButtonBases name={ing} key={ing} id="grid" />;
-              })}
-          </div>
-        </main>
-      </Layout>
-    );
-  }
+  return (
+    <Layout setDrinks={setDrinks}>
+      <main className="main">
+        <div id="buttonGrid">
+          {drinks.length > 0 ? (
+            drinks.map((drink) => {
+              return <DrinkCard drink={drink} />;
+            })
+          ) : main.length > 0 && main.length > 0 ? (
+            main.map((ing) => {
+              return (
+                <ButtonBases
+                  name={ing}
+                  key={ing}
+                  id="grid"
+                  setDrinks={setDrinks} ///call this function inside your button component
+                  //and then setDrinks(drinks) drinks you get from the firebase
+                />
+              );
+            })
+          ) : (
+            <h1>Main Not Defined</h1>
+          )}
+        </div>
+      </main>
+    </Layout>
+  );
 }

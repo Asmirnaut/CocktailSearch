@@ -47,55 +47,83 @@ export default function RecipeReviewCard(props) {
     setExpanded(!expanded);
   };
 
+  const createIngredients = () => {
+    let arr = [];
+    for (let key in props.drink) {
+      if (key[1] === 'n' && key[2] === 'g') {
+        if (props.drink[key] !== undefined) {
+          if (props.drink[key].name !== null) {
+            console.log('drannkkkkkkkkkkkkkkkk', props.drink[key]);
+            arr.push(
+              <li>
+                {props.drink[key].name} : {props.drink[key].amount}
+              </li>
+            );
+          }
+        } else {
+          continue;
+        }
+      }
+    }
+    return arr;
+  };
+
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={props.name}
-        subheader={props.ing1.name}
-      />
-      <CardMedia className={classes.media} image="" title="props.name" />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {props.instructions}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+    <div id="drink-card">
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar
+              id="avatar"
+              aria-label="recipe"
+              className={classes.avatar}
+            ></Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={props.drink.name}
+          subheader={props.drink.ing1.name}
+        />
+        <CardMedia
+          className={classes.media}
+          image={props.drink.image}
+          title="props.name"
+        />
         <CardContent>
-          <Typography paragraph>Ingredients</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
+          <Typography variant="body2" color="textSecondary" component="p">
+            {props.drink.instructions}
           </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            // onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon onClick={handleExpandClick} />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>Ingredients</Typography>
+            <Typography paragraph>
+              <ul>{createIngredients()}</ul>
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+    </div>
   );
 }

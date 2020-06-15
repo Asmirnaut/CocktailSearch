@@ -13,8 +13,13 @@ const useStyles = makeStyles({
   },
 });
 
-const NavBar = () => {
+const NavBar = ({ setDrinks }) => {
   const classes = useStyles();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setDrinks([]);
+  };
   return (
     <div>
       <Paper className={classes.root}>
@@ -25,8 +30,11 @@ const NavBar = () => {
           textColor="primary"
           centered
         >
-          <Tab className={classes.label} label="By Main Ingredient" />
-          <Tab className={classes.label} label="All Drinks" />
+          <Tab
+            className={classes.label}
+            onClick={(e) => handleClick(e)}
+            label="By Main Ingredient"
+          />
         </Tabs>
       </Paper>
     </div>

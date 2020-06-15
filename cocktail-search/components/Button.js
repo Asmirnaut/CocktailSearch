@@ -87,17 +87,17 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('opacity'),
   },
 }));
-export const drink = '';
 
 export default function ButtonBases(props) {
   const router = useRouter();
+  console.log(props);
 
   const handleClick = async (e, ingredient) => {
     e.preventDefault();
-    drink = ingredient;
-    router.push({
-      pathname: '/drinks',
-    });
+    const drinks = await FirebaseWrapper.GetInstance().DrinksByIngredients(
+      ingredient
+    );
+    props.setDrinks(drinks);
   };
 
   const classes = useStyles();
@@ -109,7 +109,7 @@ export default function ButtonBases(props) {
           key={props.name}
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
-          onclick={(e) => handleClick(e, props.name)}
+          onClick={(e) => handleClick(e, props.name)}
           style={{
             width: image.width,
           }}

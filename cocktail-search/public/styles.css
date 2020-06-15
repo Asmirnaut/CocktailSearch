@@ -23,6 +23,12 @@ body {
 .main {
   margin-top: 25px;
 }
+#avatar {
+  background-color: blue;
+}
+#drink-card {
+  margin: 20px;
+}
 
 #buttonGrid {
   display: flex;
