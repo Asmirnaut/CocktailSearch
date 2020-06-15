@@ -174,12 +174,11 @@ export class FirebaseWrapper {
   }
 
   async DrinksByIngredients(ingredient) {
-    const ing = ing1.name;
     const IngDrinks = [];
     try {
       const ref = await this._firestore
         .collection('ingredients')
-        .where(ing, '==', ingredient);
+        .where('ing_1.name', '==', ingredient);
 
       return await ref.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {

@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import { FirebaseWrapper } from '../lib/db/firebase';
+import { useRouter } from 'next/router';
+import DrinkCard from './DrinkCard';
+import Drinks from '../pages/drinks';
 
 const image = [
   {
@@ -83,10 +87,20 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('opacity'),
   },
 }));
+export const drink = '';
 
 export default function ButtonBases(props) {
-  const classes = useStyles();
+  const router = useRouter();
 
+  const handleClick = async (e, ingredient) => {
+    e.preventDefault();
+    drink = ingredient;
+    router.push({
+      pathname: '/drinks',
+    });
+  };
+
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       {image.map((image) => (
@@ -95,6 +109,7 @@ export default function ButtonBases(props) {
           key={props.name}
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
+          onclick={(e) => handleClick(e, props.name)}
           style={{
             width: image.width,
           }}

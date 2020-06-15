@@ -10,9 +10,10 @@ export default class Index extends React.Component {
     this.state = {
       ingredients: [],
       mainIngredients: [],
+      singleIngredient: '',
+      drinks: [],
     };
     this.populateMains = this.populateMains.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
@@ -28,7 +29,17 @@ export default class Index extends React.Component {
       console.log(error);
     }
   }
-  handleClick(ing) {}
+  // handleClick = async (e, ingredient) => {
+  //   e.preventDefault();
+  //   const drinks = await FirebaseWrapper.GetInstance().DrinksByIngredients(
+  //     ingredient
+  //   );
+  //   this.setState = {
+  //     ...this.state,
+  //     singleIngredient: ingredient,
+  //     drinks,
+  //   };
+  // };
 
   populateMains() {
     let mains = new Set();
@@ -46,21 +57,20 @@ export default class Index extends React.Component {
   }
 
   render() {
-    const { mainIngredients, ingredients } = this.state;
+    const {
+      mainIngredients,
+      ingredients,
+      drinks,
+      singleIngredient,
+    } = this.state;
+
     return (
       <Layout>
         <main className="main">
           <div id="buttonGrid">
             {mainIngredients &&
               mainIngredients.map((ing) => {
-                return (
-                  <ButtonBases
-                    name={ing}
-                    key={ing}
-                    id="grid"
-                    onClick={() => this.handleClick(ing)}
-                  />
-                );
+                return <ButtonBases name={ing} key={ing} id="grid" />;
               })}
           </div>
         </main>
@@ -68,9 +78,3 @@ export default class Index extends React.Component {
     );
   }
 }
-
-//create onclick function to take the ingrediant and display all drinks for that particular main ingredient
-//create a title and navbar to wrap all components with for uniform style
-//figure out a way to get all drinks/ingredients into one constant thing so that I don't have to make database calls every time I rerender the main page
-//ie only make a database call for when I am looking for certain things
-//Do I even need the regular drinks db when I can just use the ingredients thing instead since it technically has everything(that alone should cut my reads in half)

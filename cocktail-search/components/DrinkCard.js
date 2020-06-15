@@ -63,11 +63,7 @@ export default function RecipeReviewCard(props) {
         title={props.name}
         subheader={props.ing1.name}
       />
-      <CardMedia
-        className={classes.media}
-        image={props.image}
-        title={props.name}
-      />
+      <CardMedia className={classes.media} image="" title="props.name" />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {props.instructions}
