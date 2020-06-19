@@ -31,3 +31,5 @@ yarn-error.log*
 .env
 
 .secret.js
+
+.firebase/hosting
