@@ -53,7 +53,6 @@ export default function RecipeReviewCard(props) {
       if (key[1] === 'n' && key[2] === 'g') {
         if (props.drink[key] !== undefined) {
           if (props.drink[key].name !== null) {
-            console.log('drannkkkkkkkkkkkkkkkk', props.drink[key]);
             arr.push(
               <li>
                 {props.drink[key].name} : {props.drink[key].amount}

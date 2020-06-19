@@ -13,6 +13,11 @@ const Layout = (props) => {
           href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap"
           rel="stylesheet"
         ></link>
+        <script
+          src="https://apis.google.com/js/platform.js"
+          async
+          defer
+        ></script>
       </Head>
 
       <Header />
