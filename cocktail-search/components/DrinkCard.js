@@ -14,11 +14,15 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+const imageUrl = '/lightBlueGradient.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    backgroundImage: `url(${imageUrl})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
   },
   media: {
     height: 0,
@@ -73,15 +77,11 @@ export default function RecipeReviewCard(props) {
         <CardHeader
           avatar={
             <Avatar
+              src="/neon-cocktail-image-1.jpeg"
               id="avatar"
               aria-label="recipe"
               className={classes.avatar}
             ></Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
           }
           title={props.drink.name}
           subheader={props.drink.ing1.name}

@@ -2,13 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import { FirebaseWrapper } from '../lib/db/firebase';
-import { useRouter } from 'next/router';
-import DrinkCard from './DrinkCard';
-import Drinks from '../pages/drinks';
 
 const image = [
   {
-    url: 'https://cdn.wallpapersafari.com/25/76/wko8QG.jpg',
+    url: '/blue-gradient-2.jpeg',
     title: 'Drink',
     width: '100%',
   },
@@ -18,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 300,
     width: 'auto',
+    marginBottom: 10,
   },
   image: {
     position: 'relative',
@@ -89,9 +87,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonBases(props) {
-  const router = useRouter();
-  console.log(props);
-
   const handleClick = async (e, ingredient) => {
     e.preventDefault();
     const drinks = await FirebaseWrapper.GetInstance().DrinksByIngredients(

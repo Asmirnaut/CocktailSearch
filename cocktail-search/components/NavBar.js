@@ -2,6 +2,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { makeStyles } from '@material-ui/core/styles';
+import Search from './Search';
 
 const useStyles = makeStyles({
   root: {
@@ -13,12 +14,13 @@ const useStyles = makeStyles({
   },
 });
 
-const NavBar = ({ setDrinks }) => {
+const NavBar = ({ setDrinks, drinks, setDrink }) => {
   const classes = useStyles();
 
   const handleClick = (e) => {
     e.preventDefault();
     setDrinks([]);
+    setDrink([]);
   };
   return (
     <div>
@@ -35,6 +37,7 @@ const NavBar = ({ setDrinks }) => {
             onClick={(e) => handleClick(e)}
             label="By Main Ingredient"
           />
+          <Search drinks={drinks} setDrink={setDrink} setDrinks={setDrinks} />
         </Tabs>
       </Paper>
     </div>
