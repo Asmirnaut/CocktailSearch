@@ -23,4 +23,9 @@ This project was built with :
 - React.js
 - Styled with Material-ui
 
+Future features I will be working on : 
+- Users will be able to log-in and click the hearts on the individual drink cards and save them to the "My Favorite Drinks" tab
+- Users will be able to add their own favorite drink recipes if they are not already available on the page
+- Search feature will be able to support searching for ingredients, not just specific drinks
+
 
