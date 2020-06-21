@@ -139,6 +139,39 @@ export class FirebaseWrapper {
     }
   }
 
+  async GetSingleDrink(name) {
+    const Drink = [];
+    try {
+      const ref = await this._firestore
+        .collection('ingredients')
+        .where('name', '==', name);
+
+      return await ref.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          Drink.push({
+            name: doc.data().name,
+            image: doc.data().image,
+            glass_type: doc.data().glass_type,
+            instructions: doc.data().instructions,
+            ing1: doc.data().ing_1,
+            ing2: doc.data().ing_2,
+            ing3: doc.data().ing3,
+            ing4: doc.data().ing_4,
+            ing5: doc.data().ing_5,
+            ing6: doc.data().ing_6,
+            ing7: doc.data().ing_7,
+            ing8: doc.data().ing_8,
+            ing9: doc.data().ing_9,
+            ing10: doc.data().ing_10,
+            ing11: doc.data().ing_11,
+            ing12: doc.data().ing_12,
+          });
+        });
+        return Drink;
+      });
+    } catch (error) {}
+  }
+
   async GetAllIngredients() {
     try {
       const IngArray = [];

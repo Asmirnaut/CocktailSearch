@@ -4,12 +4,12 @@ import ButtonBases from '../components/Button';
 import Layout from '../components/Layout';
 import DrinkCard from '../components/DrinkCard';
 import { useState, useEffect } from 'react';
-import Drinks from '../pages/drinks';
 
 export default function Index() {
   const [drinks, setDrinks] = useState([]);
   const [main, setMain] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [singleDrink, setSingleDrink] = useState([]);
 
   useEffect(() => {
     makeCall();
@@ -26,12 +26,10 @@ export default function Index() {
       if (allIngredients) {
         setIngredients(allIngredients);
       }
-      // populateMains();
     } catch (error) {
       console.log(error);
     }
   };
-  // MOVE THIS HANDLECLICK TO THE BUTTON COMPONENT AND CALL IT THERE
 
   const populateMains = () => {
     let mains = new Set();
@@ -46,11 +44,20 @@ export default function Index() {
   };
 
   return (
-    <Layout setDrinks={setDrinks}>
+    <Layout
+      setDrinks={setDrinks}
+      drinks={ingredients}
+      setDrink={setSingleDrink}
+      drink={singleDrink}
+    >
       <main className="main">
         <div id="buttonGrid">
           {drinks.length > 0 ? (
             drinks.map((drink) => {
+              return <DrinkCard drink={drink} />;
+            })
+          ) : singleDrink.length > 0 ? (
+            singleDrink.map((drink) => {
               return <DrinkCard drink={drink} />;
             })
           ) : main.length > 0 && main.length > 0 ? (
@@ -60,8 +67,7 @@ export default function Index() {
                   name={ing}
                   key={ing}
                   id="grid"
-                  setDrinks={setDrinks} ///call this function inside your button component
-                  //and then setDrinks(drinks) drinks you get from the firebase
+                  setDrinks={setDrinks}
                 />
               );
             })
