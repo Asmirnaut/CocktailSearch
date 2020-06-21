@@ -1,7 +1,7 @@
+# Cocktail Search : Find recipes for your favorite drinks!
+
 ![CocktailSearch Logo](https://user-images.githubusercontent.com/35347667/85216300-c14c9a80-b350-11ea-8572-d6c7c05223f9.png)
 
-
-# Cocktail Search : Find recipes for your favorite drinks!
 ------------------------
 
 ## You can search drinks by main ingredient: 
