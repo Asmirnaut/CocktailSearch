@@ -5,9 +5,12 @@ import { lightBlue } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core';
 import { FirebaseWrapper } from '../lib/db/firebase';
 
+const imageUrl = '/lightBlueGradient.jpg';
+
 const styles = makeStyles(() => ({
   root: {
-    backgroundColor: lightBlue[500],
+    backgroundImage: `url(${imageUrl})`,
+    borderRadius: 18,
   },
 }));
 
@@ -27,6 +30,7 @@ export default function Search({ drinks, setDrink, setDrinks }) {
   const handleClose = (e) => {
     e.preventDefault();
     setDrink([]);
+    setDrinks([]);
   };
 
   const classes = styles();
@@ -36,7 +40,7 @@ export default function Search({ drinks, setDrink, setDrinks }) {
       inputLabel="Search Drinks"
       options={drinks}
       classes={classes}
-      onClose={handleClose}
+      onClose={(e) => handleClose(e)}
       getOptionLabel={(drink) => drink.name}
       onInputChange={findDrink}
       style={{ width: 300 }}

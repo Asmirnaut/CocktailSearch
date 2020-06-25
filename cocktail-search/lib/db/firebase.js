@@ -169,7 +169,9 @@ export class FirebaseWrapper {
         });
         return Drink;
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async GetAllIngredients() {

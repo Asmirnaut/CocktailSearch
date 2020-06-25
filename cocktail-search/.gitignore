@@ -30,6 +30,6 @@ yarn-error.log*
 .env.production.local
 .env
 
-.secret.js
+secret.js
 
 .firebase/hosting

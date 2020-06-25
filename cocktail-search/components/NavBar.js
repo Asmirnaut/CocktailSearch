@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     backgroundColor: '#151618',
   },
   label: {
+    fontSize: 'inherit',
     color: '#fafafa',
   },
 });
@@ -25,13 +26,7 @@ const NavBar = ({ setDrinks, drinks, setDrink }) => {
   return (
     <div>
       <Paper className={classes.root}>
-        <Tabs
-          // value={value}
-          // onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
+        <Tabs indicatorColor="primary" textColor="primary" centered>
           <Tab
             className={classes.label}
             onClick={(e) => handleClick(e)}
